@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ExcelHandler.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Module for utilities</a> &gt; <a href="index.source.html" class="el_package">pl.edu.agh.kis.pz1</a> &gt; <span class="el_source">ExcelHandler.java</span></div><h1>ExcelHandler.java</h1><pre class="source lang-java linenums">package pl.edu.agh.kis.pz1;
+
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Logger;
+
+/**
+ * A class responsible for handling the Excel file interactions.
+ * &lt;p&gt;
+ * The ExcelHandler class is used to read and write data from/to an Excel file
+ * containing information about rooms and guests. It loads data from the file,
+ * processes it, and updates the Excel file accordingly. The class also handles
+ * saving and closing the workbook.
+ * &lt;/p&gt;
+ */
+public class ExcelHandler {
+<span class="fc" id="L24">    private static final Logger LOGGER = Logger.getLogger(ExcelHandler.class.getName());</span>
+    private final String excelFilePath;
+    private Workbook workbook;
+
+    /**
+     * Retrieves the current workbook.
+     *
+     * @return the {@link Workbook} object associated with the Excel file.
+     */
+    public Workbook getWorkbook() {
+<span class="fc" id="L34">        return workbook;</span>
+    }
+
+    /**
+     * Constructor that initializes the ExcelHandler by opening the specified Excel file.
+     *
+     * @param excelFilePath the path to the Excel file to be used.
+     * @throws IOException if there is an error reading the Excel file.
+     */
+<span class="fc" id="L43">    public ExcelHandler(String excelFilePath) throws IOException {</span>
+<span class="fc" id="L44">        this.excelFilePath = excelFilePath;</span>
+<span class="fc" id="L45">        try (FileInputStream fis = new FileInputStream(excelFilePath)) {</span>
+<span class="fc" id="L46">            this.workbook = new XSSFWorkbook(fis);</span>
+        }
+<span class="fc" id="L48">    }</span>
+
+    /**
+     * Reads the room data from the Excel file and returns it as a map of room numbers to room objects.
+     * &lt;p&gt;
+     * This method processes each sheet in the Excel workbook, extracting room information such as
+     * room number, price, type, capacity, guest information, start date, and end date.
+     * &lt;/p&gt;
+     *
+     * @return a {@link MyMap} containing room data, where keys are room numbers, and values are {@link Room} objects.
+     */
+    public MyMap&lt;Integer, Room&gt; getRoomsData() {
+<span class="fc" id="L60">        MyMap&lt;Integer, Room&gt; rooms = new MyMap&lt;&gt;();</span>
+
+<span class="fc bfc" id="L62" title="All 2 branches covered.">        for(int k = 0; k &lt; workbook.getNumberOfSheets(); k++) {</span>
+<span class="fc" id="L63">            Sheet sheet = workbook.getSheetAt(k);</span>
+<span class="fc" id="L64">            int i = 0;</span>
+
+<span class="fc bfc" id="L66" title="All 2 branches covered.">            for (Row row : sheet) {</span>
+<span class="pc bpc" id="L67" title="1 of 4 branches missed.">                if (i != 0 &amp;&amp; row.getCell(0) != null) {</span>
+<span class="fc" id="L68">                    int roomNr = (int) row.getCell(0).getNumericCellValue();</span>
+<span class="fc" id="L69">                    int price = (int) row.getCell(1).getNumericCellValue();</span>
+<span class="fc" id="L70">                    String type = row.getCell(2).getStringCellValue();</span>
+<span class="fc" id="L71">                    int capacity = (int) row.getCell(3).getNumericCellValue();</span>
+
+<span class="fc" id="L73">                    Room room = new Room(roomNr, price, type, capacity);</span>
+
+<span class="fc" id="L75">                    List&lt;Guest&gt; guestList = getGuestsListFromRow(row);</span>
+<span class="pc bpc" id="L76" title="1 of 2 branches missed.">                    if(!guestList.isEmpty()){</span>
+<span class="fc" id="L77">                        room.setGuests(guestList);</span>
+                    }
+
+<span class="fc" id="L80">                    room.setStartDate(getExcelDate(row.getCell(8)));</span>
+<span class="fc" id="L81">                    room.setEndDate(getExcelDate(row.getCell(9)));</span>
+<span class="fc" id="L82">                    rooms.put(roomNr, room);</span>
+                }
+<span class="fc" id="L84">                i++;</span>
+<span class="fc" id="L85">            }</span>
+        }
+<span class="fc" id="L87">        return rooms;</span>
+    }
+
+    /**
+     * Converts an Excel date to a {@link LocalDate}.
+     * &lt;p&gt;
+     * The Excel date format is numeric, where the value represents the number of days since January 1, 1900.
+     * This method converts that value into a {@link LocalDate}.
+     * &lt;/p&gt;
+     *
+     * @param dateCell the Excel cell containing the date value.
+     * @return a {@link LocalDate} representing the Excel date, or null if the date cell is empty or invalid.
+     */
+    LocalDate getExcelDate(Cell dateCell) {
+<span class="pc bpc" id="L101" title="1 of 4 branches missed.">        if (dateCell != null &amp;&amp; dateCell.getCellType() == CellType.NUMERIC) {</span>
+<span class="fc" id="L102">            LocalDate excelStartDate = LocalDate.of(1900, 1, 1);</span>
+<span class="fc" id="L103">            int daysSince1900 = (int) dateCell.getNumericCellValue() - 2;</span>
+<span class="fc" id="L104">            return excelStartDate.plusDays(daysSince1900);</span>
+        }
+<span class="fc" id="L106">        return null;</span>
+    }
+
+    /**
+     * Extracts guest information from the given row.
+     * &lt;p&gt;
+     * This method parses the guest information from cells 4 to 7 in the row, splitting the cell's value into individual
+     * attributes such as name, email, ID number, and phone number.
+     * &lt;/p&gt;
+     *
+     * @param row the row containing guest data.
+     * @return a list of {@link Guest} objects created from the guest data.
+     */
+    protected List&lt;Guest&gt; getGuestsListFromRow(Row row) {
+<span class="fc" id="L120">        List&lt;Guest&gt; guestList = new ArrayList&lt;&gt;();</span>
+
+<span class="fc bfc" id="L122" title="All 2 branches covered.">        for (int j = 4; j &lt; 8; ++j) {</span>
+<span class="fc" id="L123">            Cell cell = row.getCell(j);</span>
+<span class="fc bfc" id="L124" title="All 2 branches covered.">            if(cell != null){</span>
+<span class="fc" id="L125">                String[] parts = cell.getStringCellValue().split(&quot;,&quot;);</span>
+<span class="fc" id="L126">                String name = parts[0].trim();</span>
+<span class="pc bpc" id="L127" title="1 of 2 branches missed.">                if (parts.length &gt; 1) {</span>
+<span class="nc" id="L128">                    String emailAddress = parts[1].trim();</span>
+<span class="nc" id="L129">                    String idNumber = parts[2].trim();</span>
+<span class="nc" id="L130">                    String phoneNumber = parts[3].trim();</span>
+<span class="nc" id="L131">                    guestList.add(new Guest(name, emailAddress, idNumber, phoneNumber));</span>
+<span class="nc" id="L132">                } else {</span>
+<span class="fc" id="L133">                    guestList.add(new Guest(name));</span>
+                }
+            }
+        }
+<span class="fc" id="L137">        return guestList;</span>
+    }
+
+    /**
+     * Updates the information of a room in the Excel file.
+     * &lt;p&gt;
+     * This method updates guest information, start and end dates, and additional information for a specific room.
+     * &lt;/p&gt;
+     *
+     * @param room the {@link Room} object containing the updated information.
+     */
+    public void updateRoomInfo(Room room) {
+<span class="fc" id="L149">            int floor = room.getNumber() /100;</span>
+<span class="fc" id="L150">            Sheet sheet = workbook.getSheetAt(floor - 1); // indeksowane od '0' i dlatego -1</span>
+
+<span class="fc" id="L152">            int numberAtFloor = room.getNumber()%100;</span>
+<span class="fc" id="L153">            Row row = sheet.getRow(numberAtFloor);</span>
+<span class="fc" id="L154">            int i = 5;</span>
+<span class="pc bpc" id="L155" title="1 of 2 branches missed.">            for (Guest g : room.getGuests()) {</span>
+<span class="nc bnc" id="L156" title="All 2 branches missed.">                if(g.isMain()){</span>
+<span class="nc" id="L157">                    Cell cell = row.getCell(4);</span>
+<span class="nc bnc" id="L158" title="All 2 branches missed.">                    if (cell == null) {</span>
+<span class="nc" id="L159">                        cell = row.createCell(4);</span>
+                    }
+<span class="nc" id="L161">                    cell.setCellValue(g.getName() + &quot;,&quot; +</span>
+<span class="nc" id="L162">                                            g.getEmailAddress() + &quot;,&quot; +</span>
+<span class="nc" id="L163">                                            g.getPhoneNumber() + &quot;,&quot; +</span>
+<span class="nc" id="L164">                                            g.getIdNumber());</span>
+<span class="nc" id="L165">                }</span>
+                else{
+<span class="nc" id="L167">                    Cell cell = row.getCell(i);</span>
+<span class="nc bnc" id="L168" title="All 2 branches missed.">                    if (cell == null) {</span>
+<span class="nc" id="L169">                        cell = row.createCell(i);</span>
+                    }
+<span class="nc" id="L171">                    cell.setCellValue(g.getName());</span>
+<span class="nc" id="L172">                    ++i;</span>
+                }
+<span class="nc" id="L174">            }</span>
+<span class="fc" id="L175">            Cell cellStartDate = row.getCell(8);</span>
+<span class="pc bpc" id="L176" title="1 of 2 branches missed.">            if (cellStartDate == null) {</span>
+<span class="fc" id="L177">                cellStartDate = row.createCell(8);</span>
+            }
+<span class="fc" id="L179">            cellStartDate.setCellValue(room.getStartDate());</span>
+
+<span class="fc" id="L181">            Cell cellEndDate = row.getCell(9);</span>
+<span class="pc bpc" id="L182" title="1 of 2 branches missed.">            if (cellEndDate == null) {</span>
+<span class="fc" id="L183">                cellEndDate = row.createCell(9);</span>
+            }
+<span class="fc" id="L185">            cellEndDate.setCellValue(room.getEndDate());</span>
+
+<span class="fc" id="L187">            Cell cellInfo = row.getCell(10);</span>
+<span class="pc bpc" id="L188" title="1 of 2 branches missed.">            if (cellInfo == null) {</span>
+<span class="fc" id="L189">                cellInfo = row.createCell(10);</span>
+            }
+<span class="fc" id="L191">            cellInfo.setCellValue(room.getAdditionalInfo());</span>
+<span class="fc" id="L192">    }</span>
+
+    /**
+     * Clears the information of a room in the Excel file.
+     * &lt;p&gt;
+     * This method removes guest details, start and end dates, and additional information from the Excel sheet for the room.
+     * &lt;/p&gt;
+     *
+     * @param room the {@link Room} object whose information needs to be cleared.
+     */
+    public void clearRoomInfo(Room room) {
+<span class="fc" id="L203">            int floor = room.getNumber() / 100;</span>
+<span class="fc" id="L204">            Sheet sheet = workbook.getSheetAt(floor - 1); // Indexed from 0, hence -1</span>
+
+<span class="fc" id="L206">            int numberAtFloor = room.getNumber()%100;</span>
+<span class="fc" id="L207">            Row row = sheet.getRow(numberAtFloor);</span>
+<span class="fc bfc" id="L208" title="All 2 branches covered.">            for(int i = 4; i &lt; 11; ++i){</span>
+<span class="fc" id="L209">                Cell cell = row.getCell(i);</span>
+<span class="fc bfc" id="L210" title="All 2 branches covered.">                if (cell != null) {</span>
+<span class="fc" id="L211">                    row.removeCell(cell);</span>
+                }
+            }
+<span class="fc" id="L214">    }</span>
+
+    /**
+     * Saves the current state of the Excel file.
+     * &lt;p&gt;
+     * This method writes all changes made to the workbook back to the file at the specified path.
+     * &lt;/p&gt;
+     */
+    public void save() {
+<span class="nc" id="L223">        try (FileOutputStream fileOutputStream = new FileOutputStream(excelFilePath)) {</span>
+<span class="nc" id="L224">            workbook.write(fileOutputStream);</span>
+<span class="nc" id="L225">            System.out.println(&quot;Pomyślnie zapisano zmiany&quot;);</span>
+<span class="nc" id="L226">            System.out.print(&quot;Wprowadź komendę: &quot;);</span>
+<span class="nc" id="L227">        } catch (IOException e) {</span>
+<span class="nc" id="L228">            LOGGER.info(e.getMessage());</span>
+<span class="nc" id="L229">        }</span>
+<span class="nc" id="L230">    }</span>
+
+    /**
+     * Closes the workbook and releases any resources.
+     */
+    public void close() {
+        try {
+<span class="nc" id="L237">            workbook.close();</span>
+<span class="nc" id="L238">        } catch (IOException e) {</span>
+<span class="nc" id="L239">            LOGGER.info(e.getMessage());</span>
+<span class="nc" id="L240">        }</span>
+<span class="nc" id="L241">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SaveCommand.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Main module of the application</a> &gt; <a href="index.source.html" class="el_package">pl.edu.agh.kis.pz1.commands</a> &gt; <span class="el_source">SaveCommand.java</span></div><h1>SaveCommand.java</h1><pre class="source lang-java linenums">package pl.edu.agh.kis.pz1.commands;
+
+import pl.edu.agh.kis.pz1.ExcelHandler;
+import pl.edu.agh.kis.pz1.MyMap;
+import pl.edu.agh.kis.pz1.Room;
+
+/**
+ * A class representing the command to save the current state of the application.
+ * &lt;p&gt;This command saves the current state of the rooms and their data into a file using
+ * the {@link ExcelHandler}. This ensures that the changes made during the session are preserved.&lt;/p&gt;
+ */
+public class SaveCommand extends Command{
+    /**
+     * Constructs a new {@code SaveCommand}.
+     * &lt;p&gt;This constructor initializes the command with the required {@link ExcelHandler}
+     * and a map of rooms.&lt;/p&gt;
+     *
+     * @param excelHandler the handler used to save the state to a file
+     * @param r a map containing room numbers and their corresponding {@link Room} objects
+     */
+    public SaveCommand(ExcelHandler excelHandler, MyMap&lt;Integer, Room&gt; r) {
+<span class="fc" id="L22">        super(excelHandler, r);</span>
+<span class="fc" id="L23">    }</span>
+
+    /**
+     * Executes the save command.
+     * &lt;p&gt;This method invokes the {@link ExcelHandler#save()} method to save the current state of the rooms
+     * and their data to a file. This ensures that any changes made to room data are written to the file system.&lt;/p&gt;
+     */
+    @Override
+    public void execute() {
+<span class="fc" id="L32">        excelHandler.save();</span>
+<span class="fc" id="L33">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

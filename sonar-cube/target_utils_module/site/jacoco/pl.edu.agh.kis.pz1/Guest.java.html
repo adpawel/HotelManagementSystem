@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Guest.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Module for utilities</a> &gt; <a href="index.source.html" class="el_package">pl.edu.agh.kis.pz1</a> &gt; <span class="el_source">Guest.java</span></div><h1>Guest.java</h1><pre class="source lang-java linenums">package pl.edu.agh.kis.pz1;
+
+/**
+ * A class representing a guest in the hotel system.
+ * &lt;p&gt;
+ * The Guest class holds information about an individual guest, including their name, contact details (email, phone number),
+ * and identification number. A guest can also be marked as the &quot;main&quot; guest for a particular room.
+ * &lt;/p&gt;
+ */
+public class Guest {
+    /**
+     * is guest a main guest
+     */
+    protected boolean isMain;
+    /**
+     * Name of guest
+     */
+    protected String name;
+    /**
+     * EmailAddress
+     */
+    protected String emailAddress;
+    /**
+     * phoneNumber
+     */
+    protected String phoneNumber;
+    /**
+     * IdNumber
+     */
+    protected String idNumber;
+
+    /**
+     * Constructor for creating a main guest with all details.
+     *
+     * @param guestName the name of the guest.
+     * @param email the email address of the guest, or null if not provided.
+     * @param id the identification number (e.g., PESEL) of the guest, or null if not provided.
+     * @param phone the phone number of the guest, or null if not provided.
+     */
+<span class="fc" id="L40">    public Guest(String guestName, String email, String id, String phone) {</span>
+<span class="fc bfc" id="L41" title="All 2 branches covered.">        isMain = email != null;</span>
+<span class="fc" id="L42">        name = guestName;</span>
+<span class="fc" id="L43">        emailAddress = email;</span>
+<span class="fc" id="L44">        phoneNumber = phone;</span>
+<span class="fc" id="L45">        idNumber = id;</span>
+<span class="fc" id="L46">    }</span>
+
+    /**
+     * Constructor for creating a guest which is not a main guest.
+     * &lt;p&gt;
+     * This constructor is used when only the name of the guest is available.
+     * &lt;/p&gt;
+     *
+     * @param name the name of the guest.
+     */
+    public Guest(String name) {
+<span class="fc" id="L57">        this(name, null, null, null);</span>
+<span class="fc" id="L58">    }</span>
+
+    /**
+     * Checks whether this guest is the main guest for the room.
+     *
+     * @return true if the guest is the main guest (i.e., has an email address); false otherwise.
+     */
+    public boolean isMain() {
+<span class="fc" id="L66">        return isMain;</span>
+    }
+
+    /**
+     * Setter for isMain feature
+     * @param main boolean value
+     */
+    public void setMain(boolean main) {
+<span class="fc" id="L74">        isMain = main;</span>
+<span class="fc" id="L75">    }</span>
+
+    /**
+     * Getter for name
+     * @return name
+     */
+    public String getName() {
+<span class="fc" id="L82">        return name;</span>
+    }
+
+    /**
+     * Setter for name
+     * @param name a name of guest
+     */
+    public void setName(String name) {
+<span class="fc" id="L90">        this.name = name;</span>
+<span class="fc" id="L91">    }</span>
+
+    /**
+     * Getter for email address
+     * @return emailAddress
+     */
+    public String getEmailAddress() {
+<span class="fc" id="L98">        return emailAddress;</span>
+    }
+
+    /**
+     * Setter for email address
+     * @param emailAddress an email address of a guest
+     */
+    public void setEmailAddress(String emailAddress) {
+<span class="fc" id="L106">        this.emailAddress = emailAddress;</span>
+<span class="fc" id="L107">    }</span>
+
+    /**
+     * Getter for phone number
+     * @return phoneNumber
+     */
+    public String getPhoneNumber() {
+<span class="fc" id="L114">        return phoneNumber;</span>
+    }
+
+    /**
+     * Setter for phone number
+     * @param phoneNumber phone number of type string
+     */
+    public void setPhoneNumber(String phoneNumber) {
+<span class="fc" id="L122">        this.phoneNumber = phoneNumber;</span>
+<span class="fc" id="L123">    }</span>
+
+    /**
+     * Getter for id number
+     * @return idNumber
+     */
+    public String getIdNumber() {
+<span class="fc" id="L130">        return idNumber;</span>
+    }
+
+    /**
+     * Setter for id number
+     * @param idNumber of type String
+     */
+    public void setIdNumber(String idNumber) {
+<span class="fc" id="L138">        this.idNumber = idNumber;</span>
+<span class="fc" id="L139">    }</span>
+
+    /**
+     * Returns a string representation of the guest's details.
+     * &lt;p&gt;
+     * If the guest is the main guest, the string will include the name, email, phone number, and identification number.
+     * If the guest is not the main guest, only the name will be included.
+     * &lt;/p&gt;
+     *
+     * @return a string representation of the guest's details.
+     */
+    @Override
+    public String toString() {
+<span class="nc bnc" id="L152" title="All 2 branches missed.">        if (isMain) {</span>
+<span class="nc" id="L153">            return &quot;Imię i nazwisko: &quot; + name +</span>
+                    &quot;, Adres email: &quot; + emailAddress  +
+                    &quot;, Nr telefonu: &quot; + phoneNumber +
+                    &quot;, Pesel/Numer identyfikacyjny: &quot; + idNumber;
+        }
+<span class="nc" id="L158">        return &quot;Imię i nazwisko: &quot; + name;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
