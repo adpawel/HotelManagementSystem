@@ -1,0 +1,49 @@
+@options
+@packages
+--class-path
+'C:/Users/adpaw/Studia/Semestr3/PZ1/HotelManagement/target/classes;C:/Users/adpaw/Studia/Semestr3/PZ1/HotelManagement/main/target/classes;C:/Users/adpaw/Studia/Semestr3/PZ1/HotelManagement/utils/target/classes;C:/Users/adpaw/.m2/repository/commons-codec/commons-codec/1.15/commons-codec-1.15.jar;C:/Users/adpaw/.m2/repository/org/apache/commons/commons-lang3/3.12.0/commons-lang3-3.12.0.jar;C:/Users/adpaw/.m2/repository/org/apache/commons/commons-csv/1.10.0/commons-csv-1.10.0.jar;C:/Users/adpaw/.m2/repository/org/slf4j/slf4j-api/1.7.36/slf4j-api-1.7.36.jar;C:/Users/adpaw/.m2/repository/org/apache/logging/log4j/log4j-api/2.20.0/log4j-api-2.20.0.jar;C:/Users/adpaw/.m2/repository/org/apache/logging/log4j/log4j-core/2.20.0/log4j-core-2.20.0.jar;C:/Users/adpaw/.m2/repository/org/apache/logging/log4j/log4j-slf4j-impl/2.20.0/log4j-slf4j-impl-2.20.0.jar;C:/Users/adpaw/.m2/repository/org/apache/poi/poi/5.2.2/poi-5.2.2.jar;C:/Users/adpaw/.m2/repository/org/apache/commons/commons-collections4/4.4/commons-collections4-4.4.jar;C:/Users/adpaw/.m2/repository/org/apache/commons/commons-math3/3.6.1/commons-math3-3.6.1.jar;C:/Users/adpaw/.m2/repository/com/zaxxer/SparseBitSet/1.2/SparseBitSet-1.2.jar;C:/Users/adpaw/.m2/repository/org/apache/poi/poi-ooxml/5.2.2/poi-ooxml-5.2.2.jar;C:/Users/adpaw/.m2/repository/org/apache/poi/poi-ooxml-lite/5.2.2/poi-ooxml-lite-5.2.2.jar;C:/Users/adpaw/.m2/repository/org/apache/xmlbeans/xmlbeans/5.0.3/xmlbeans-5.0.3.jar;C:/Users/adpaw/.m2/repository/org/apache/commons/commons-compress/1.21/commons-compress-1.21.jar;C:/Users/adpaw/.m2/repository/com/github/virtuald/curvesapi/1.07/curvesapi-1.07.jar;C:/Users/adpaw/.m2/repository/org/apache/poi/poi-ooxml-schemas/4.1.2/poi-ooxml-schemas-4.1.2.jar;C:/Users/adpaw/.m2/repository/commons-io/commons-io/2.14.0/commons-io-2.14.0.jar'
+-encoding
+'UTF-8'
+-protected
+-source
+'17'
+-sourcepath
+'C:/Users/adpaw/Studia/Semestr3/PZ1/HotelManagement/main/src/main/java;C:/Users/adpaw/Studia/Semestr3/PZ1/HotelManagement/main/target/generated-sources/annotations;C:/Users/adpaw/Studia/Semestr3/PZ1/HotelManagement/utils/src/main/java;C:/Users/adpaw/Studia/Semestr3/PZ1/HotelManagement/utils/target/generated-sources/annotations'
+-author
+-bottom
+'Copyright &#169; 2024. All rights reserved.'
+-charset
+'UTF-8'
+-d
+'C:/Users/adpaw/Studia/Semestr3/PZ1/HotelManagement/target/javadoc'
+-docencoding
+'UTF-8'
+-doctitle
+'Hotel App 1.0 API'
+-use
+-version
+-windowtitle
+'Hotel App 1.0 API'
+pl.edu.agh.kis.pz1
+pl.edu.agh.kis.pz1.commands
+C:\Users\adpaw\Studia\Semestr3\PZ1\HotelManagement\main\src\main\java = 1729942800230
+C:\Users\adpaw\Studia\Semestr3\PZ1\HotelManagement\main\target\generated-sources\annotations = 1732027344342
+C:\Users\adpaw\Studia\Semestr3\PZ1\HotelManagement\utils\src\main\java = 1729945534149
+C:\Users\adpaw\Studia\Semestr3\PZ1\HotelManagement\utils\target\generated-sources\annotations = 1732027334685
+C:\Users\adpaw\Studia\Semestr3\PZ1\HotelManagement\target\javadoc\allclasses-index.html = 1732027374192
+C:\Users\adpaw\Studia\Semestr3\PZ1\HotelManagement\target\javadoc\allpackages-index.html = 1732027374194
+C:\Users\adpaw\Studia\Semestr3\PZ1\HotelManagement\target\javadoc\element-list = 1732027373928
+C:\Users\adpaw\Studia\Semestr3\PZ1\HotelManagement\target\javadoc\help-doc.html = 1732027374243
+C:\Users\adpaw\Studia\Semestr3\PZ1\HotelManagement\target\javadoc\index-all.html = 1732027374233
+C:\Users\adpaw\Studia\Semestr3\PZ1\HotelManagement\target\javadoc\index.html = 1732027374158
+C:\Users\adpaw\Studia\Semestr3\PZ1\HotelManagement\target\javadoc\jquery-ui.overrides.css = 1732027374263
+C:\Users\adpaw\Studia\Semestr3\PZ1\HotelManagement\target\javadoc\member-search-index.js = 1732027374201
+C:\Users\adpaw\Studia\Semestr3\PZ1\HotelManagement\target\javadoc\module-search-index.js = 1732027374197
+C:\Users\adpaw\Studia\Semestr3\PZ1\HotelManagement\target\javadoc\overview-summary.html = 1732027374237
+C:\Users\adpaw\Studia\Semestr3\PZ1\HotelManagement\target\javadoc\overview-tree.html = 1732027374149
+C:\Users\adpaw\Studia\Semestr3\PZ1\HotelManagement\target\javadoc\package-search-index.js = 1732027374198
+C:\Users\adpaw\Studia\Semestr3\PZ1\HotelManagement\target\javadoc\script.js = 1732027374249
+C:\Users\adpaw\Studia\Semestr3\PZ1\HotelManagement\target\javadoc\search.js = 1732027374251
+C:\Users\adpaw\Studia\Semestr3\PZ1\HotelManagement\target\javadoc\stylesheet.css = 1732027374246
+C:\Users\adpaw\Studia\Semestr3\PZ1\HotelManagement\target\javadoc\tag-search-index.js = 1732027374202
+C:\Users\adpaw\Studia\Semestr3\PZ1\HotelManagement\target\javadoc\type-search-index.js = 1732027374199
